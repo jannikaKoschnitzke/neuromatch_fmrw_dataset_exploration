@@ -2,6 +2,7 @@ import os, requests
 import numpy as np
 import nimare.utils as nim
 from nilearn import plotting
+import matplotlib as mp
 
 # Using R inside python
 from rpy2 import robjects
@@ -25,10 +26,12 @@ def showSubjectsElectrodeLocation(subj):
   try:
     mov = "dat" + str(subj) + "_mov"
     imag = "dat" + str(subj) + "_imag"
-    br_img_mov = plotting.view_markers(globals()[mov]['mni_locs'])
+    br_img_mov = plotting.view_markers(globals()[mov]['mni_locs'],
+                                       marker_labels=list(globals()[mov]['aal_label']))
     br_img_mov.open_in_browser()
 
-    br_img_imag = plotting.view_markers(globals()[imag]['mni_locs'])
+    br_img_imag = plotting.view_markers(globals()[imag]['mni_locs'],
+                                        marker_labels=list(globals()[imag]['aal_label']))
     br_img_imag.open_in_browser()
 
   except KeyError:
@@ -101,7 +104,3 @@ for i in subjNum:
 
 # visualise electrode locations for specific subject in 3D (opens in browser)
 showSubjectsElectrodeLocation(0)
-
-
-
-
